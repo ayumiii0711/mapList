@@ -103,7 +103,7 @@ def scrape_google_maps(industry, prefecture, city, max_results=100):
     }
     run = client.actor("boztek-ltd/google-maps-scraper").call(run_input=run_input)
     results = []
-    for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+    for item in client.dataset(run.default_dataset_id).iterate_items():
         results.append({
             "店名": item.get("title", "") or item.get("name", ""),
             "住所": item.get("address", "") or item.get("street", ""),
