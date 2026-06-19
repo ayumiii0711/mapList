@@ -102,7 +102,7 @@ def scrape_google_maps(industry, prefecture, city, max_results=100):
         "reviews": False,
         "photos": False,
     }
-    run = client.actor("compass/google-maps-scraper").call(run_input=run_input)
+    run = client.actor("boztek-ltd/google-maps-scraper").call(run_input=run_input)
     results = []
     for item in client.dataset(run["defaultDatasetId"]).iterate_items():
         results.append({
