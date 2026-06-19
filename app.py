@@ -97,19 +97,18 @@ def scrape_google_maps(industry, prefecture, city, max_results=100):
         "searchStringsArray": [search_string],
         "maxCrawledPlacesPerSearch": max_results,
         "language": "ja",
-        "exportPlaceUrls": True,
-        "additionalInfo": False,
-        "reviews": False,
-        "photos": False,
+        "country": "Japan",
+        "detailGeneration": True,
+        "verboseLog": False,
     }
     run = client.actor("boztek-ltd/google-maps-scraper").call(run_input=run_input)
     results = []
     for item in client.dataset(run["defaultDatasetId"]).iterate_items():
         results.append({
-            "店名": item.get("title", ""),
-            "住所": item.get("address", ""),
-            "電話番号": item.get("phone", ""),
-            "URL": item.get("url", ""),
+            "店名": item.get("title", "") or item.get("name", ""),
+            "住所": item.get("address", "") or item.get("street", ""),
+            "電話番号": item.get("phone", "") or item.get("phoneNumber", ""),
+            "URL": item.get("url", "") or item.get("website", "") or item.get("googleMapsUrl", ""),
         })
     return results
 
